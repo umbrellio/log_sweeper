@@ -6,7 +6,7 @@ It is designed to be used with Ruby logger rotation. By default, it will remove 
 
 ## Installation
 
-Juts add `gem "log_sweeper"` to your Gemfile.
+Simply add `gem "log_sweeper"` to your Gemfile.
 
 ## Examples
 
