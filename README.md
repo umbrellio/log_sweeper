@@ -20,3 +20,15 @@ Juts add `gem "log_sweeper"` to your Gemfile.
   # In case you don't want any logging and deleting any logs
   LogSweeper.run("log", logs_lifetime_days_count: Float::INFINITY, logger: Logger.new(nil))
 ```
+
+## License
+
+Released under MIT License.
+
+## Authors
+
+Created by Yuri Smirnov.
+
+<a href="https://github.com/umbrellio/">
+<img style="float: left;" src="https://umbrellio.github.io/Umbrellio/supported_by_umbrellio.svg" alt="Supported by Umbrellio" width="439" height="72">
+</a>
