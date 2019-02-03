@@ -2,7 +2,7 @@
 
 `LogSweeper` is a simple module for cleaning up log directories.
 
-It is designed to be used with Ruby logger rotation. By default, it will remove all log files older than 10 days and will gzip all log files that look like rotated log files. For example, `production.log.20190228` will be gzipped and replaced with `production.log.20190228.gz`. It logs what it's doing using the provided logger which defaults to STDOUT logger.
+It is designed to be used with Ruby logger rotation. By default, it will remove all log files older than 10 days and will gzip all log files that look like rotated log files. For example, `production.log.20190228` will be gzipped and replaced with `production.log.20190228.gz`. It logs what it's doing using the provided logger which defaults to `STDOUT` logger.
 
 ## Installation
 
@@ -19,6 +19,14 @@ Juts add `gem "log_sweeper"` to your Gemfile.
 
   # In case you don't want any logging and deleting any logs
   LogSweeper.run("log", logs_lifetime_days_count: Float::INFINITY, logger: Logger.new(nil))
+```
+
+The best way to use this module is to run it via cron, for example you can use [whenever](https://github.com/javan/whenever) gem with similar config in `schedule.rb` file:
+
+```ruby
+every 1.hour do
+  runner "LogRotator.run(Rails.root.join('log'))"
+end
 ```
 
 ## License
