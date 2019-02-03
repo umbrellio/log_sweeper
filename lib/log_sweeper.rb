@@ -21,10 +21,10 @@ module LogSweeper
 
       filename = entry.basename.to_s
 
-      if filename.match?(/\.log\b/) && Time.now - entry.mtime > lifetime_threshold
+      if filename =~ /\.log\b/ && Time.now - entry.mtime > lifetime_threshold
         logger.info "deleting #{entry}"
         entry.delete
-      elsif filename.match?(/\.log\.\d+$/)
+      elsif filename =~ /\.log\.\d+$/
         logger.info "gzipping #{entry}"
         compress_file(entry)
         entry.delete
