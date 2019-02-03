@@ -5,6 +5,10 @@ RSpec.describe LogSweeper do
     expect(LogSweeper::VERSION).not_to be(nil)
   end
 
+  def run!(**options)
+    LogSweeper.run("spec/log", **options)
+  end
+
   def create_file!(filename, mtime = nil)
     path = log_dir.join(filename)
     path.write("Hello world!")
@@ -32,7 +36,7 @@ RSpec.describe LogSweeper do
     let(:sweeper_log) { StringIO.new }
 
     it "sweeps the logs" do
-      LogSweeper.run("spec/log", logger: sweeper_logger)
+      run!(logger: sweeper_logger)
 
       expect(log_dir.children.map { |x| x.basename.to_s }).to match_array([
         "ignored file 2.txt",
@@ -50,6 +54,21 @@ RSpec.describe LogSweeper do
         "skipping spec/log/recent file.log\n",
         "skipping spec/log/old ignored file.log123\n",
       ])
+    end
+
+    context "disabling logs_lifetime_days_count and logger" do
+      it "doesn't delete any logs" do
+        run!(logs_lifetime_days_count: Float::INFINITY, logger: Logger.new(nil))
+
+        expect(log_dir.children.map { |x| x.basename.to_s }).to match_array([
+          "ignored file 2.txt",
+          "ignored file.log.1.smth",
+          "old file.log",
+          "old ignored file.log123",
+          "recent file.log.1.gz",
+          "recent file.log",
+        ])
+      end
     end
   end
 end

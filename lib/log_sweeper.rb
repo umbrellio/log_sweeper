@@ -9,15 +9,19 @@ require "logger"
 module LogSweeper
   extend self
 
+  # Clean up provided log directory
+  # @param path [String, Pathname] path to the log directory to clean
+  # @param logs_lifetime_days_count [Numeric] number of days to keep the logs
+  # @param logger [Logger] logger to use
   def run(path, logs_lifetime_days_count: 10, logger: Logger.new(STDOUT))
-    min_mtime = Time.now - (logs_lifetime_days_count.to_f * 24 * 3600)
+    lifetime_threshold = logs_lifetime_days_count * 24 * 3600
 
     Pathname.new(path).each_child do |entry|
       next unless entry.file?
 
       filename = entry.basename.to_s
 
-      if filename.match?(/\.log\b/) && entry.mtime < min_mtime
+      if filename.match?(/\.log\b/) && Time.now - entry.mtime > lifetime_threshold
         logger.info "deleting #{entry}"
         entry.delete
       elsif filename.match?(/\.log\.\d+$/)
