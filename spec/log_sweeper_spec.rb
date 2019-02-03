@@ -16,7 +16,8 @@ RSpec.describe LogSweeper do
       log_dir.rmtree
       log_dir.mkdir
 
-      create_file!("old file.log", Time.now - (20 * 24 * 3600))
+      create_file!("old file.log", old_time)
+      create_file!("old ignored file.log123", old_time)
       create_file!("recent file.log")
       create_file!("recent file.log.1")
       create_file!("ignored file.log.1.smth")
@@ -26,6 +27,7 @@ RSpec.describe LogSweeper do
     end
 
     let(:log_dir) { Pathname.new(__dir__).join("log") }
+    let(:old_time) { Time.now - (20 * 24 * 3600) }
     let(:sweeper_logger) { Logger.new(sweeper_log) }
     let(:sweeper_log) { StringIO.new }
 
@@ -35,6 +37,7 @@ RSpec.describe LogSweeper do
       expect(log_dir.children.map { |x| x.basename.to_s }).to match_array([
         "ignored file 2.txt",
         "ignored file.log.1.smth",
+        "old ignored file.log123",
         "recent file.log.1.gz",
         "recent file.log",
       ])
@@ -45,6 +48,7 @@ RSpec.describe LogSweeper do
         "skipping spec/log/ignored file 2.txt\n",
         "skipping spec/log/ignored file.log.1.smth\n",
         "skipping spec/log/recent file.log\n",
+        "skipping spec/log/old ignored file.log123\n",
       ])
     end
   end
