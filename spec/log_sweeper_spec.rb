@@ -17,7 +17,7 @@ RSpec.describe LogSweeper do
 
   describe ".run" do
     before do
-      log_dir.rmtree
+      log_dir.rmtree if log_dir.exist?
       log_dir.mkdir
 
       create_file!("old file.log", old_time)
