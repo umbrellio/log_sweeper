@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{TBD}
   spec.description   = %q{TBD}
-  spec.homepage      = "https://github.com/umbrellio/low_sweeper"
+  spec.homepage      = "https://github.com/umbrellio/log_sweeper"
   spec.license       = "MIT"
 
   # Specify which files should be added to the gem when it is released.
