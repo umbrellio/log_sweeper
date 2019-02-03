@@ -29,6 +29,10 @@ every 1.hour do
 end
 ```
 
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/umbrellio/log_sweeper.
+
 ## License
 
 Released under MIT License.
