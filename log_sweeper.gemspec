@@ -10,18 +10,12 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Yuri Smirnov"]
   spec.email         = ["tycooon@yandex.ru"]
 
-  spec.summary       = "TBD"
-  spec.description   = "TBD"
+  spec.summary       = "A simple module for cleaning up log directories."
+  spec.description   = "LogSweeper is a simple module for cleaning up log directories."
   spec.homepage      = "https://github.com/umbrellio/log_sweeper"
   spec.license       = "MIT"
 
-  # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  spec.files         = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  end
-  spec.bindir        = "exe"
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^spec/}) }
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler"
