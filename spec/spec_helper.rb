@@ -1,4 +1,17 @@
+# frozen_string_literal: true
+
 require "bundler/setup"
+require "simplecov"
+require "coveralls"
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new([
+  SimpleCov::Formatter::HTMLFormatter,
+  Coveralls::SimpleCov::Formatter,
+])
+
+SimpleCov.minimum_coverage(100)
+SimpleCov.start
+
 require "log_sweeper"
 
 RSpec.configure do |config|
