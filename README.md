@@ -25,7 +25,7 @@ The best way to use this module is to run it via cron, for example you can use [
 
 ```ruby
 every 1.hour do
-  runner "LogRotator.run(Rails.root.join('log'))"
+  runner "LogSweeper.run('log')"
 end
 ```
 
