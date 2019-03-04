@@ -42,7 +42,12 @@ module LogSweeper
     zipped = "#{file_name}.gz"
 
     Zlib::GzipWriter.open(zipped) do |gz|
-      gz.write IO.binread(file_name)
+      File.open(file_name) do |file|
+        loop do
+          chunk = file.read(16 * 1024) or break
+          gz.write(chunk)
+        end
+      end
     end
   end
 end
